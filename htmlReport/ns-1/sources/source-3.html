@@ -1,0 +1,292 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > PostService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.blog.service</a>
+</div>
+
+<h1>Coverage Summary for Class: PostService (com.example.blog.service)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PostService</td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1.7%
+  </span>
+  <span class="absValue">
+    (1/58)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">PostService$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1.7%
+  </span>
+  <span class="absValue">
+    (1/58)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.blog.service;
+&nbsp;
+&nbsp;import com.cloudinary.Cloudinary;
+&nbsp;import com.cloudinary.utils.ObjectUtils;
+&nbsp;import com.example.blog.dto.PostDto;
+&nbsp;import com.example.blog.entity.Category;
+&nbsp;import com.example.blog.entity.Post;
+&nbsp;import com.example.blog.entity.User;
+&nbsp;import com.example.blog.repository.CategoryRepository;
+&nbsp;import com.example.blog.repository.PostRepository;
+&nbsp;import com.example.blog.repository.UserRepository;
+&nbsp;import jakarta.persistence.criteria.CriteriaBuilder;
+&nbsp;import jakarta.transaction.Transactional;
+&nbsp;import org.modelmapper.ModelMapper;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;import org.springframework.web.multipart.MultipartFile;
+&nbsp;
+&nbsp;import java.nio.file.Files;
+&nbsp;import java.nio.file.Path;
+&nbsp;import java.nio.file.Paths;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;@Service
+<b class="fc">&nbsp;public class  PostService {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private PostRepository postRepository;
+&nbsp;    @Autowired
+&nbsp;    private ModelMapper modelMapper;
+&nbsp;    @Autowired
+&nbsp;    private CategoryRepository categoryRepository;
+&nbsp;    @Autowired
+&nbsp;    private UserRepository userRepository;
+&nbsp;    @Autowired
+&nbsp;    private UserService userService;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private Cloudinary cloudinary;
+&nbsp;    public static final String blogImage = &quot;C:\\Users\\santa\\Downloads\\blog\\blogImage&quot;;
+&nbsp;
+&nbsp;    //create new post
+&nbsp;    @Transactional
+&nbsp;    public PostDto savePost(String email,Integer categoryId,String title,String content,MultipartFile image) throws Exception{
+&nbsp;        try{
+&nbsp;
+&nbsp;            // 1️⃣ Fetch User
+<b class="nc">&nbsp;            User user = userRepository.findByUserEmail(email)</b>
+<b class="nc">&nbsp;                    .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</b>
+&nbsp;            // 2️⃣ Fetch Category
+<b class="nc">&nbsp;            Category category = categoryRepository.findById(categoryId)</b>
+<b class="nc">&nbsp;                    .orElseThrow(() -&gt; new RuntimeException(&quot;Category not found&quot;));</b>
+&nbsp;            //local database save image
+<b class="nc">&nbsp;            String fileName = image.getOriginalFilename();//get Original FileName</b>
+<b class="nc">&nbsp;            Path path = Paths.get(blogImage,fileName);//set file path</b>
+<b class="nc">&nbsp;            Files.createDirectories(path.getParent());// if folder is exits or create new folder not give error</b>
+<b class="nc">&nbsp;            Files.write(path,image.getBytes());</b>
+&nbsp;            //save image in cloudinary
+&nbsp;/*        Map&lt;?, ?&gt; uploadResult = cloudinary.uploader().upload(
+&nbsp;                image.getBytes(),
+&nbsp;                ObjectUtils.asMap(&quot;folder&quot;, &quot;blog-images&quot;));
+&nbsp;        String imageUrl = uploadResult.get(&quot;secure_url&quot;).toString();*/
+<b class="nc">&nbsp;            Post post = new Post();</b>
+<b class="nc">&nbsp;            post.setTitle(title);</b>
+<b class="nc">&nbsp;            post.setContent(content);</b>
+<b class="nc">&nbsp;            post.setImage(fileName);</b>
+&nbsp;//        post.setImage(imageUrl);
+<b class="nc">&nbsp;            post.setUser(userRepository.getById(user.getId()));</b>
+<b class="nc">&nbsp;            post.setCategory(categoryRepository.getById(categoryId));</b>
+<b class="nc">&nbsp;            Post savePost =  postRepository.save(post);</b>
+<b class="nc">&nbsp;            return modelMapper.map(savePost,PostDto.class);</b>
+&nbsp;        }catch (Exception e){
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Any error during saving new  Post&quot;+e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    // ✅ Upload to CLOUDINARY
+&nbsp;/*    public String uploadCloudinary(MultipartFile image) throws Exception {
+&nbsp;        Map&lt;?, ?&gt; result = cloudinary.uploader().upload(
+&nbsp;                image.getBytes(),
+&nbsp;                ObjectUtils.asMap(&quot;folder&quot;, &quot;blog-images&quot;)
+&nbsp;        );
+&nbsp;        return result.get(&quot;secure_url&quot;).toString(); // store in DB
+&nbsp;    }*/
+&nbsp;
+&nbsp;    //update
+&nbsp;    @Transactional
+&nbsp;    public PostDto updatePostService(String email,Integer postId,String title, String content,
+&nbsp;                                     MultipartFile image, Integer categoryId) throws Exception{
+&nbsp;        try{
+&nbsp;            // Fetch Post
+<b class="nc">&nbsp;            Post post = postRepository.findById(postId)</b>
+<b class="nc">&nbsp;                    .orElseThrow(() -&gt; new RuntimeException(&quot;Post not found&quot;));</b>
+&nbsp;            // 1️⃣ Fetch User
+<b class="nc">&nbsp;            User user = userRepository.findByUserEmail(email)</b>
+<b class="nc">&nbsp;                    .orElseThrow(() -&gt; new RuntimeException(&quot;User not found&quot;));</b>
+&nbsp;            // 2️⃣ Fetch Category
+<b class="nc">&nbsp;            Category category = categoryRepository.findById(categoryId)</b>
+<b class="nc">&nbsp;                    .orElseThrow(() -&gt; new RuntimeException(&quot;Category not found&quot;));</b>
+<b class="nc">&nbsp;            post.setTitle(title);</b>
+<b class="nc">&nbsp;            post.setUpdateTime(LocalDateTime.now());</b>
+<b class="nc">&nbsp;            post.setContent(content);</b>
+<b class="nc">&nbsp;            String fileName = null;</b>
+<b class="nc">&nbsp;            if (image != null &amp;&amp; !image.isEmpty()) {</b>
+<b class="nc">&nbsp;                fileName = image.getOriginalFilename();</b>
+<b class="nc">&nbsp;                Path uploadDir = Paths.get(blogImage);</b>
+<b class="nc">&nbsp;                Files.createDirectories(uploadDir);</b>
+<b class="nc">&nbsp;                Path filePath = uploadDir.resolve(fileName);</b>
+<b class="nc">&nbsp;                Files.write(filePath, image.getBytes());</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (image != null) {</b>
+<b class="nc">&nbsp;                Map&lt;?, ?&gt; uploadResult = cloudinary.uploader().upload(</b>
+<b class="nc">&nbsp;                        image.getBytes(),</b>
+<b class="nc">&nbsp;                        ObjectUtils.asMap(&quot;folder&quot;, &quot;blog-images&quot;));</b>
+<b class="nc">&nbsp;                String imageUrl = uploadResult.get(&quot;secure_url&quot;).toString();</b>
+<b class="nc">&nbsp;                post.setImage(imageUrl);//server</b>
+&nbsp;//            post.setImage(fileName);//local database
+&nbsp;            }
+<b class="nc">&nbsp;            post.setUser(userRepository.getById(user.getId()));</b>
+<b class="nc">&nbsp;            post.setCategory(categoryRepository.getById(categoryId));</b>
+<b class="nc">&nbsp;            Post savePost =  postRepository.save(post);</b>
+<b class="nc">&nbsp;            return modelMapper.map(savePost,PostDto.class);</b>
+&nbsp;        }catch (Exception e){
+<b class="nc">&nbsp;         throw  new RuntimeException(&quot;Any error during updating  post&quot;+e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // get all post
+&nbsp;    public List&lt;PostDto&gt; getAllPost(){
+<b class="nc">&nbsp;        return postRepository.findAll()</b>
+<b class="nc">&nbsp;                .stream()</b>
+<b class="nc">&nbsp;                .map(post -&gt; modelMapper.map(post, PostDto.class))</b>
+<b class="nc">&nbsp;                .toList();</b>
+&nbsp;    }
+&nbsp;    //get by id
+&nbsp;    public PostDto getPostById(Integer id){
+<b class="nc">&nbsp;        Post post = postRepository.findById(id).orElseThrow(() -&gt;new RuntimeException(&quot;Post Not Found &quot;+id));</b>
+<b class="nc">&nbsp;        return modelMapper.map(post,PostDto.class);</b>
+&nbsp;    }
+&nbsp;    //delete by id
+&nbsp;    @Transactional
+&nbsp;    public Boolean deletePostById(Integer id,String email){
+<b class="nc">&nbsp;        boolean remove = false;</b>
+&nbsp;        try {
+<b class="nc">&nbsp;          User user = userService.loadByEmail(email);</b>
+<b class="nc">&nbsp;          remove = user.getPosts().removeIf(post -&gt; post.getUser().getId().equals(id));</b>
+<b class="nc">&nbsp;          if(remove){</b>
+<b class="nc">&nbsp;              postRepository.deleteById(id);</b>
+&nbsp;          }
+&nbsp;        }catch (Exception e){
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;An error occurred while detecting the entry.&quot;,e);</b>
+&nbsp;        }
+<b class="nc">&nbsp;      return remove;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-01-21 23:38</div>
+</div>
+</body>
+</html>

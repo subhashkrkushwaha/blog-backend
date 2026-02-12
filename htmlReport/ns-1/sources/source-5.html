@@ -1,0 +1,194 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > UserRoleService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.blog.service</a>
+</div>
+
+<h1>Coverage Summary for Class: UserRoleService (com.example.blog.service)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserRoleService</td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    5.3%
+  </span>
+  <span class="absValue">
+    (1/19)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">UserRoleService$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    5.3%
+  </span>
+  <span class="absValue">
+    (1/19)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.blog.service;
+&nbsp;
+&nbsp;import com.example.blog.dto.UserRoleDto;
+&nbsp;import com.example.blog.entity.UserRole;
+&nbsp;import com.example.blog.repository.UserRoleRepository;
+&nbsp;
+&nbsp;import org.modelmapper.ModelMapper;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;import org.springframework.transaction.annotation.Transactional;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Service
+<b class="fc">&nbsp;public class UserRoleService {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private UserRoleRepository userRoleRepository;
+&nbsp;    @Autowired
+&nbsp;    private ModelMapper modelMapper;
+&nbsp;    //create user role
+&nbsp;    @Transactional
+&nbsp;    public UserRoleDto createUserRole(UserRoleDto userRoleDto){
+&nbsp;
+<b class="nc">&nbsp;        UserRole userRole = modelMapper.map(userRoleDto,UserRole.class);</b>
+<b class="nc">&nbsp;        UserRole savedUserRole = userRoleRepository.save(userRole);</b>
+<b class="nc">&nbsp;        return modelMapper.map(savedUserRole,UserRoleDto.class);</b>
+&nbsp;    }
+&nbsp;    //update user role
+&nbsp;    @Transactional
+&nbsp;    public UserRoleDto updateUserRole(Integer id,UserRoleDto updateRoleDto){
+<b class="nc">&nbsp;        UserRole exitUserRole = userRoleRepository.findById(id)</b>
+<b class="nc">&nbsp;                .orElseThrow( () -&gt;new RuntimeException(&quot;Role not found&quot;));</b>
+<b class="nc">&nbsp;        exitUserRole.setUserRoleName(updateRoleDto.getUserRoleName());</b>
+<b class="nc">&nbsp;        UserRole updateRole = userRoleRepository.save(exitUserRole);</b>
+<b class="nc">&nbsp;        return modelMapper.map(updateRole,UserRoleDto.class);</b>
+&nbsp;    }
+&nbsp;    //get all
+&nbsp;    @Transactional(readOnly = true)
+&nbsp;    public List&lt;UserRoleDto&gt; findAllUserRoles(){
+<b class="nc">&nbsp;        return userRoleRepository.findAll()</b>
+<b class="nc">&nbsp;                .stream()</b>
+<b class="nc">&nbsp;                .map(userRole -&gt; modelMapper.map(userRole,UserRoleDto.class))</b>
+<b class="nc">&nbsp;                .toList();</b>
+&nbsp;    }
+&nbsp;    //get by id
+&nbsp;    public UserRoleDto getByIdUserRoles(Integer id){
+<b class="nc">&nbsp;        UserRole exitUser = userRoleRepository.findById(id)</b>
+<b class="nc">&nbsp;                .orElseThrow(() -&gt;new RuntimeException(&quot;UserRole not found&quot;));</b>
+<b class="nc">&nbsp;        return modelMapper.map( exitUser,UserRoleDto.class);</b>
+&nbsp;    }
+&nbsp;    //delete by id
+&nbsp;    @Transactional
+&nbsp;    public void deleteByIdUserRoles(Integer id){
+<b class="nc">&nbsp;        if(!userRoleRepository.existsById(id)) {</b>
+<b class="nc">&nbsp;                throw  new RuntimeException(&quot;UserRole not found&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;         userRoleRepository.deleteById(id);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-01-21 23:38</div>
+</div>
+</body>
+</html>
