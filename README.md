@@ -1,23 +1,3 @@
-Blog App Backend
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog App Backend</title>
-  <style>
-    body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
-    h1, h2, h3 { color: #2c3e50; }
-    code { background-color: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
-    pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
-    table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-    th { background-color: #f2f2f2; }
-    ul { margin: 0; padding-left: 20px; }
-  </style>
-</head>
-<body>
-
 <h1>Blog App Backend</h1>
 
 <h2>Overview</h2>
@@ -124,15 +104,6 @@ Blog App Backend
   </li>
 </ol>
 
-<h2>Highlights for Resume / Portfolio</h2>
-<ul>
-  <li>Developed a <strong>secure RESTful backend</strong> using Spring Boot, JPA, and MySQL.</li>
-  <li>Implemented <strong>JWT authentication</strong> and <strong>role-based authorization</strong>.</li>
-  <li>Integrated <strong>Redis caching</strong> for performance optimization.</li>
-  <li>Documented APIs using <strong>Swagger</strong>.</li>
-  <li>Ensured high code quality with <strong>JUnit</strong> and <strong>Mockito</strong>.</li>
-  <li>Enforced ownership rules: users can delete only their own blogs.</li>
-</ul>
 
 </body>
 </html>
