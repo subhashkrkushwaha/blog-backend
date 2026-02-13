@@ -1,4 +1,3 @@
-# blog-backend
 Blog App Backend
 Overview
 
