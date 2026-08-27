@@ -4,7 +4,7 @@
 <p><strong>Blog App Backend</strong> is a <strong>Spring Boot-based RESTful application</strong> that provides a <strong>secure, scalable, and role-based API</strong> for managing blogs. It supports <strong>user registration, authentication, blog creation, retrieval, and deletion</strong> with <strong>role-based access control</strong>.</p>
 <p>The application uses <strong>MySQL</strong> for persistent storage, <strong>Redis caching</strong> for performance, and includes <strong>Swagger API documentation</strong> along with <strong>unit tests</strong> using <strong>JUnit</strong> and <strong>Mockito</strong>.</p>
 
-<h2>Key Features</h2>
+<h2>Key Feature</h2>
 
 <h3>User Management</h3>
 <ul>
